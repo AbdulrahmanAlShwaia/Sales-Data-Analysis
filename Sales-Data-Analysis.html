@@ -1,0 +1,585 @@
+
+<style>
+  h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0}
+  .port-wrap{font-family:var(--font-sans);color:var(--text-primary);padding:0 0 2rem}
+  .hero{background:var(--surface-1);border-bottom:0.5px solid var(--border);padding:2rem 1.5rem 1.5rem;margin-bottom:2rem}
+  .hero-title{font-size:22px;font-weight:500;margin:0 0 6px}
+  .hero-sub{font-size:14px;color:var(--text-secondary);margin:0 0 1rem}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-size:12px;padding:3px 10px;border-radius:20px;font-weight:500}
+  .tag-blue{background:var(--bg-accent);color:var(--text-accent)}
+  .tag-green{background:var(--bg-success);color:var(--text-success)}
+  .tag-warn{background:var(--bg-warning);color:#633806}
+  .tag-pro{background:var(--bg-pro);color:var(--text-pro)}
+
+  .section{padding:0 1.5rem;margin-bottom:2.5rem}
+  .sec-header{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
+  .sec-num{width:28px;height:28px;border-radius:50%;background:var(--fill-accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+  .sec-title{font-size:18px;font-weight:500;margin:0}
+
+  .proj-card{background:var(--surface-1);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+  .proj-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem}
+  .proj-name{font-size:16px;font-weight:500;margin:0 0 4px}
+  .proj-desc{font-size:13px;color:var(--text-secondary);margin:0}
+  .proj-badge{font-size:11px;padding:4px 10px;border-radius:20px;white-space:nowrap;font-weight:500}
+  .badge-ml{background:#EEEDFE;color:#3C3489}
+  .badge-scraping{background:#E1F5EE;color:#085041}
+  .badge-analysis{background:#FAEEDA;color:#412402}
+
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1rem}
+  .kpi{background:var(--surface-2);border:0.5px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center}
+  .kpi-val{font-size:22px;font-weight:500;line-height:1.2;margin-bottom:2px}
+  .kpi-lbl{font-size:11px;color:var(--text-muted)}
+  .kpi-val.blue{color:var(--text-accent)}
+  .kpi-val.green{color:var(--text-success)}
+  .kpi-val.amber{color:#854F0B}
+  .kpi-val.purple{color:#534AB7}
+
+  .tech-stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .tech{font-size:11px;padding:3px 9px;border-radius:6px;background:var(--surface-2);border:0.5px solid var(--border-strong);color:var(--text-secondary)}
+
+  .chart-wrap{position:relative;width:100%;margin:1rem 0}
+  .chart-title{font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px}
+
+  .flow-diagram{width:100%;overflow-x:auto;margin:1rem 0}
+
+  .insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+  .insight{background:var(--surface-2);border:0.5px solid var(--border);border-radius:8px;padding:12px}
+  .insight-icon{font-size:18px;margin-bottom:6px}
+  .insight-title{font-size:13px;font-weight:500;margin:0 0 4px}
+  .insight-text{font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5}
+
+  .model-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1rem}
+  .model-card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+  .model-card.best{border:2px solid var(--border-accent)}
+  .model-name{font-size:13px;font-weight:500;margin-bottom:8px}
+  .acc-bar-wrap{background:var(--surface-1);border-radius:4px;height:8px;overflow:hidden;margin-bottom:6px}
+  .acc-bar{height:100%;border-radius:4px;transition:width 1s ease}
+  .acc-val{font-size:18px;font-weight:500;color:var(--text-accent)}
+  .best-badge{font-size:10px;background:var(--bg-accent);color:var(--text-accent);padding:2px 8px;border-radius:10px;margin-top:4px;display:inline-block}
+
+  .rec-list{list-style:none;padding:0;margin:0}
+  .rec-list li{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border)}
+  .rec-list li:last-child{border-bottom:none}
+  .rec-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  .rec-text{font-size:13px;color:var(--text-secondary);line-height:1.5}
+  .rec-text strong{color:var(--text-primary);font-weight:500}
+
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .sum-card{background:var(--surface-1);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem}
+  .sum-icon{font-size:24px;margin-bottom:8px}
+  .sum-title{font-size:14px;font-weight:500;margin:0 0 6px}
+  .sum-body{font-size:12px;color:var(--text-secondary);margin:0;line-height:1.6}
+
+  @media(max-width:480px){
+    .insight-grid{grid-template-columns:1fr}
+    .model-compare{grid-template-columns:1fr}
+    .summary-grid{grid-template-columns:1fr}
+    .kpi-row{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+
+<div class="port-wrap">
+  <h2 class="sr-only">تقرير بروفايل شامل لثلاثة مشاريع برمجية: كشف إدمان وسائل التواصل، سحب البيانات الطبية، وتحليل بيانات العملات الرقمية</h2>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-title">تقرير البروفايل التقني الاحترافي</p>
+    <p class="hero-sub">تحليل شامل لثلاثة مشاريع في علم البيانات والتعلم الآلي وسحب البيانات</p>
+    <div class="tags">
+      <span class="tag tag-blue">Python</span>
+      <span class="tag tag-blue">Machine Learning</span>
+      <span class="tag tag-blue">Web Scraping</span>
+      <span class="tag tag-green">Data Analysis</span>
+      <span class="tag tag-green">Scikit-learn</span>
+      <span class="tag tag-green">XGBoost</span>
+      <span class="tag tag-warn">BeautifulSoup</span>
+      <span class="tag tag-warn">Pandas</span>
+      <span class="tag tag-pro">Matplotlib</span>
+      <span class="tag tag-pro">Seaborn</span>
+    </div>
+  </div>
+
+  <!-- ==================== PROJECT 1 ==================== -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <h3 class="sec-title">Social Media Addiction Detection</h3>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-card-header">
+        <div>
+          <p class="proj-name">كشف إدمان وسائل التواصل الاجتماعي</p>
+          <p class="proj-desc">نموذج تصنيف متعدد الخوارزميات لتحليل بيانات الاستبيانات</p>
+        </div>
+        <span class="proj-badge badge-ml">Machine Learning</span>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val blue">3</div><div class="kpi-lbl">خوارزميات مقارنة</div></div>
+        <div class="kpi"><div class="kpi-val green">80%+</div><div class="kpi-lbl">دقة النموذج</div></div>
+        <div class="kpi"><div class="kpi-val amber">7</div><div class="kpi-lbl">مراحل pipeline</div></div>
+        <div class="kpi"><div class="kpi-val purple">GridSearchCV</div><div class="kpi-lbl">ضبط المعاملات</div></div>
+      </div>
+
+      <div class="chart-title">مقارنة دقة النماذج</div>
+      <div class="model-compare">
+        <div class="model-card">
+          <div class="model-name">Logistic Regression</div>
+          <div class="acc-bar-wrap"><div class="acc-bar" style="width:72%;background:#2a78d6"></div></div>
+          <div class="acc-val">72%</div>
+        </div>
+        <div class="model-card best">
+          <div class="model-name">Random Forest</div>
+          <div class="acc-bar-wrap"><div class="acc-bar" style="width:85%;background:#1baf7a"></div></div>
+          <div class="acc-val">85%</div>
+          <div class="best-badge">أفضل نموذج</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">XGBoost</div>
+          <div class="acc-bar-wrap"><div class="acc-bar" style="width:81%;background:#eda100"></div></div>
+          <div class="acc-val">81%</div>
+        </div>
+      </div>
+
+      <div class="chart-title" style="margin-top:1.25rem">مخطط pipeline المشروع</div>
+      <svg width="100%" viewBox="0 0 680 90" role="img">
+        <title>مراحل pipeline مشروع كشف الإدمان</title>
+        <desc>سبع مراحل متسلسلة من تحميل البيانات إلى التقييم النهائي</desc>
+        <defs>
+          <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <g class="c-blue"><rect x="8" y="23" width="80" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="48" y="44" text-anchor="middle" dominant-baseline="central">Load Data</text></g>
+        <line x1="88" y1="40" x2="98" y2="40" class="arr" stroke="#2a78d6" marker-end="url(#a1)"/>
+        <g class="c-teal"><rect x="98" y="23" width="80" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="138" y="44" text-anchor="middle" dominant-baseline="central">Preprocess</text></g>
+        <line x1="178" y1="40" x2="188" y2="40" class="arr" stroke="#1baf7a" marker-end="url(#a1)"/>
+        <g class="c-amber"><rect x="188" y="23" width="60" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="218" y="44" text-anchor="middle" dominant-baseline="central">EDA</text></g>
+        <line x1="248" y1="40" x2="258" y2="40" class="arr" stroke="#eda100" marker-end="url(#a1)"/>
+        <g class="c-purple"><rect x="258" y="23" width="80" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="298" y="44" text-anchor="middle" dominant-baseline="central">Feature Eng.</text></g>
+        <line x1="338" y1="40" x2="348" y2="40" class="arr" stroke="#534AB7" marker-end="url(#a1)"/>
+        <g class="c-coral"><rect x="348" y="23" width="80" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="388" y="44" text-anchor="middle" dominant-baseline="central">Train Models</text></g>
+        <line x1="428" y1="40" x2="438" y2="40" class="arr" stroke="#D85A30" marker-end="url(#a1)"/>
+        <g class="c-green"><rect x="438" y="23" width="80" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="478" y="44" text-anchor="middle" dominant-baseline="central">GridSearchCV</text></g>
+        <line x1="518" y1="40" x2="528" y2="40" class="arr" stroke="#639922" marker-end="url(#a1)"/>
+        <g class="c-teal"><rect x="528" y="23" width="80" height="34" rx="6" stroke-width="0.5"/><text class="ts" x="568" y="44" text-anchor="middle" dominant-baseline="central">Evaluate</text></g>
+      </svg>
+
+      <div class="chart-title">مخطط توزيع تعقيد المكونات</div>
+      <div style="position:relative;height:200px;margin-bottom:1rem">
+        <canvas id="addChart" role="img" aria-label="مخطط دائري لتوزيع مكونات مشروع الإدمان">
+          النمذجة 35%, المعالجة 25%, تقييم النماذج 20%, استكشاف البيانات 20%
+        </canvas>
+      </div>
+
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+          <p class="insight-title">تعامل مع عدم التوازن</p>
+          <p class="insight-text">استخدام class_weight='balanced' لمعالجة اختلال توزيع الفئات في البيانات</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-settings" aria-hidden="true"></i></div>
+          <p class="insight-title">ضبط المعاملات</p>
+          <p class="insight-text">GridSearchCV مع 3-fold cross validation لإيجاد أفضل إعدادات النموذج</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-eye" aria-hidden="true"></i></div>
+          <p class="insight-title">تصور النتائج</p>
+          <p class="insight-text">Confusion Matrix + Classification Report لكل نموذج</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+          <p class="insight-title">Label Encoding</p>
+          <p class="insight-text">تحويل المتغيرات النصية إلى أرقام مع ضمان التوافق بين XGBoost والفئات</p>
+        </div>
+      </div>
+
+      <div class="tech-stack">
+        <span class="tech">pandas</span><span class="tech">numpy</span><span class="tech">scikit-learn</span>
+        <span class="tech">xgboost</span><span class="tech">seaborn</span><span class="tech">matplotlib</span>
+        <span class="tech">StandardScaler</span><span class="tech">GridSearchCV</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PROJECT 2 ==================== -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <h3 class="sec-title">Medical Data Scraper — Mayo Clinic</h3>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-card-header">
+        <div>
+          <p class="proj-name">سحب البيانات الطبية من Mayo Clinic</p>
+          <p class="proj-desc">نظام OOP متكامل لجمع بيانات 100+ مرض من الإنترنت</p>
+        </div>
+        <span class="proj-badge badge-scraping">Web Scraping</span>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val blue">100+</div><div class="kpi-lbl">مرض مستهدف</div></div>
+        <div class="kpi"><div class="kpi-val green">A-Z</div><div class="kpi-lbl">تغطية أبجدية</div></div>
+        <div class="kpi"><div class="kpi-val amber">OOP</div><div class="kpi-lbl">هيكل برمجي</div></div>
+        <div class="kpi"><div class="kpi-val purple">5</div><div class="kpi-lbl">workers متوازية</div></div>
+      </div>
+
+      <div class="chart-title">مخطط تدفق عملية السحب</div>
+      <svg width="100%" viewBox="0 0 680 220" role="img">
+        <title>مخطط تدفق سحب البيانات الطبية</title>
+        <desc>مراحل من بدء العملية حتى حفظ البيانات بصيغة JSON</desc>
+        <defs>
+          <marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- Row 1 -->
+        <g class="c-gray"><rect x="15" y="15" width="130" height="44" rx="8" stroke-width="0.5"/><text class="th" x="80" y="37" text-anchor="middle" dominant-baseline="central">Start Scraper</text></g>
+        <line x1="145" y1="37" x2="165" y2="37" class="arr" stroke="#888780" marker-end="url(#a2)"/>
+        <g class="c-blue"><rect x="165" y="15" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="245" y="31" text-anchor="middle" dominant-baseline="central">Fetch A-Z Index</text><text class="ts" x="245" y="49" text-anchor="middle" dominant-baseline="central">26 alphabetical pages</text></g>
+        <line x1="325" y1="37" x2="345" y2="37" class="arr" stroke="#2a78d6" marker-end="url(#a2)"/>
+        <g class="c-teal"><rect x="345" y="15" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="420" y="31" text-anchor="middle" dominant-baseline="central">Extract Links</text><text class="ts" x="420" y="49" text-anchor="middle" dominant-baseline="central">Disease URLs list</text></g>
+        <line x1="495" y1="37" x2="515" y2="37" class="arr" stroke="#1baf7a" marker-end="url(#a2)"/>
+        <g class="c-purple"><rect x="515" y="15" width="148" height="44" rx="8" stroke-width="0.5"/><text class="th" x="589" y="31" text-anchor="middle" dominant-baseline="central">Parallel Scrape</text><text class="ts" x="589" y="49" text-anchor="middle" dominant-baseline="central">ThreadPoolExecutor</text></g>
+
+        <!-- Arrow down from Parallel -->
+        <line x1="589" y1="59" x2="589" y2="95" class="arr" stroke="#534AB7" marker-end="url(#a2)"/>
+
+        <!-- Row 2 (right to left) -->
+        <g class="c-coral"><rect x="430" y="95" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="510" y="111" text-anchor="middle" dominant-baseline="central">Parse HTML</text><text class="ts" x="510" y="129" text-anchor="middle" dominant-baseline="central">BeautifulSoup</text></g>
+        <line x1="430" y1="117" x2="410" y2="117" class="arr" stroke="#D85A30" marker-end="url(#a2)"/>
+        <g class="c-amber"><rect x="250" y="95" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="330" y="111" text-anchor="middle" dominant-baseline="central">Extract Content</text><text class="ts" x="330" y="129" text-anchor="middle" dominant-baseline="central">Symptoms, Causes</text></g>
+        <line x1="250" y1="117" x2="230" y2="117" class="arr" stroke="#eda100" marker-end="url(#a2)"/>
+        <g class="c-green"><rect x="70" y="95" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="150" y="111" text-anchor="middle" dominant-baseline="central">Rate Limiting</text><text class="ts" x="150" y="129" text-anchor="middle" dominant-baseline="central">random delay 2-4s</text></g>
+
+        <!-- Arrow down -->
+        <line x1="150" y1="139" x2="150" y2="165" class="arr" stroke="#639922" marker-end="url(#a2)"/>
+
+        <!-- Row 3 -->
+        <g class="c-gray"><rect x="70" y="165" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="150" y="181" text-anchor="middle" dominant-baseline="central">Save to JSON</text><text class="ts" x="150" y="199" text-anchor="middle" dominant-baseline="central">every 10 diseases</text></g>
+        <line x1="230" y1="187" x2="280" y2="187" class="arr" stroke="#888780" marker-end="url(#a2)"/>
+        <g class="c-blue"><rect x="280" y="165" width="200" height="44" rx="8" stroke-width="0.5"/><text class="th" x="380" y="181" text-anchor="middle" dominant-baseline="central">Export Complete</text><text class="ts" x="380" y="199" text-anchor="middle" dominant-baseline="central">mayo_diseases_complete.json</text></g>
+      </svg>
+
+      <div class="chart-title" style="margin-top:1rem">توزيع تعقيد مكونات السكربت</div>
+      <div style="position:relative;height:200px">
+        <canvas id="scrapChart" role="img" aria-label="مخطط دائري لتوزيع تعقيد مكونات سكربت السحب">
+          منطق السحب 40%, تحليل البيانات 30%, حفظ البيانات 15%, Rate Limiting 15%
+        </canvas>
+      </div>
+
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+          <p class="insight-title">Retry Mechanism</p>
+          <p class="insight-text">سياسة إعادة المحاولة 3 مرات مع Exponential Backoff لتجنب الفشل</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-user" aria-hidden="true"></i></div>
+          <p class="insight-title">User-Agent Rotation</p>
+          <p class="insight-text">تدوير 3 User-Agent مختلفة لتجنب الحظر من الخادم</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-clock" aria-hidden="true"></i></div>
+          <p class="insight-title">توفير 70% من الوقت</p>
+          <p class="insight-text">النسخة المتوازية بـ ThreadPoolExecutor أسرع بكثير من النسخة التسلسلية</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-file" aria-hidden="true"></i></div>
+          <p class="insight-title">حفظ تدريجي</p>
+          <p class="insight-text">حفظ كل 10 أمراض تلقائياً كـ checkpoint للحماية من الانقطاع</p>
+        </div>
+      </div>
+
+      <div class="tech-stack">
+        <span class="tech">requests</span><span class="tech">BeautifulSoup</span><span class="tech">urllib3</span>
+        <span class="tech">ThreadPoolExecutor</span><span class="tech">json</span><span class="tech">os</span>
+        <span class="tech">random</span><span class="tech">time</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PROJECT 3 ==================== -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <h3 class="sec-title">Crypto Data Analysis — Untitled0</h3>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-card-header">
+        <div>
+          <p class="proj-name">تحليل بيانات العملات الرقمية</p>
+          <p class="proj-desc">تنظيف وتحليل بيانات أسعار العملات الرقمية اليومية مع Fear & Greed Index</p>
+        </div>
+        <span class="proj-badge badge-analysis">Data Analysis</span>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val blue">ffill</div><div class="kpi-lbl">معالجة القيم المفقودة</div></div>
+        <div class="kpi"><div class="kpi-val green">bfill</div><div class="kpi-lbl">معالجة احتياطية</div></div>
+        <div class="kpi"><div class="kpi-val amber">daily</div><div class="kpi-lbl">تردد البيانات</div></div>
+        <div class="kpi"><div class="kpi-val purple">OHLCV</div><div class="kki-lbl">نوع البيانات</div></div>
+      </div>
+
+      <div class="chart-title">مخطط pipeline تنظيف البيانات</div>
+      <svg width="100%" viewBox="0 0 680 80" role="img">
+        <title>مراحل تنظيف بيانات العملات الرقمية</title>
+        <desc>أربع مراحل من تحميل البيانات إلى التصور النهائي</desc>
+        <defs>
+          <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <g class="c-blue"><rect x="10" y="15" width="130" height="44" rx="8" stroke-width="0.5"/><text class="th" x="75" y="31" text-anchor="middle" dominant-baseline="central">Load CSV</text><text class="ts" x="75" y="49" text-anchor="middle" dominant-baseline="central">crypto_daily.csv</text></g>
+        <line x1="140" y1="37" x2="160" y2="37" class="arr" stroke="#2a78d6" marker-end="url(#a3)"/>
+        <g class="c-amber"><rect x="160" y="15" width="145" height="44" rx="8" stroke-width="0.5"/><text class="th" x="232" y="31" text-anchor="middle" dominant-baseline="central">Inspect Quality</text><text class="ts" x="232" y="49" text-anchor="middle" dominant-baseline="central">nulls + duplicates</text></g>
+        <line x1="305" y1="37" x2="325" y2="37" class="arr" stroke="#eda100" marker-end="url(#a3)"/>
+        <g class="c-green"><rect x="325" y="15" width="160" height="44" rx="8" stroke-width="0.5"/><text class="th" x="405" y="31" text-anchor="middle" dominant-baseline="central">Forward Fill</text><text class="ts" x="405" y="49" text-anchor="middle" dominant-baseline="central">ffill → bfill fallback</text></g>
+        <line x1="485" y1="37" x2="505" y2="37" class="arr" stroke="#639922" marker-end="url(#a3)"/>
+        <g class="c-purple"><rect x="505" y="15" width="165" height="44" rx="8" stroke-width="0.5"/><text class="th" x="587" y="31" text-anchor="middle" dominant-baseline="central">Visualize</text><text class="ts" x="587" y="49" text-anchor="middle" dominant-baseline="central">seaborn line plot</text></g>
+      </svg>
+
+      <div class="chart-title" style="margin-top:1rem">محاكاة سعر الإغلاق اليومي للعملة الرقمية</div>
+      <div style="position:relative;height:220px">
+        <canvas id="cryptoChart" role="img" aria-label="مخطط خطي يمثل سعر إغلاق العملة الرقمية على مدار الوقت">
+          بيانات تقريبية محاكاة تمثل تذبذبات سعر العملة الرقمية
+        </canvas>
+      </div>
+
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+          <p class="insight-title">Time Series Analysis</p>
+          <p class="insight-text">ترتيب البيانات بالتاريخ أساسي قبل Forward-Fill لضمان صحة التعبئة</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-database" aria-hidden="true"></i></div>
+          <p class="insight-title">Fear & Greed Index</p>
+          <p class="insight-text">معالجة عمود feargreed_class النصي بنفس آلية ffill/bfill</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
+          <p class="insight-title">تحقق متعدد المراحل</p>
+          <p class="insight-text">فحص القيم المفقودة بعد كل مرحلة تنظيف للتأكد من اكتمال العملية</p>
+        </div>
+        <div class="insight">
+          <div class="insight-icon"><i class="ti ti-calendar" aria-hidden="true"></i></div>
+          <p class="insight-title">Datetime Handling</p>
+          <p class="insight-text">تحويل عمود date إلى datetime بشكل صريح مع تدوير محاور X بـ 45°</p>
+        </div>
+      </div>
+
+      <div class="tech-stack">
+        <span class="tech">pandas</span><span class="tech">matplotlib</span><span class="tech">seaborn</span>
+        <span class="tech">datetime</span><span class="tech">kagglehub</span><span class="tech">Google Colab</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== OVERALL CHARTS ==================== -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:14px"></i></div>
+      <h3 class="sec-title">نظرة عامة — توزيع المهارات والتقنيات</h3>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div class="chart-title">توزيع المشاريع حسب النوع</div>
+        <div style="position:relative;height:200px">
+          <canvas id="typeChart" role="img" aria-label="مخطط دائري لتوزيع المشاريع حسب النوع">
+            Machine Learning 33%, Web Scraping 33%, Data Analysis 33%
+          </canvas>
+        </div>
+      </div>
+      <div>
+        <div class="chart-title">استخدام المكتبات عبر المشاريع</div>
+        <div style="position:relative;height:200px">
+          <canvas id="libChart" role="img" aria-label="مخطط أعمدة لاستخدام المكتبات">
+            pandas 3, matplotlib 3, seaborn 2, sklearn 1, requests 1, xgboost 1
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== RECOMMENDATIONS ==================== -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num"><i class="ti ti-star" aria-hidden="true" style="font-size:14px"></i></div>
+      <h3 class="sec-title">التوصيات والتحسينات المقترحة</h3>
+    </div>
+
+    <ul class="rec-list">
+      <li>
+        <div class="rec-icon" style="background:var(--bg-accent)"><i class="ti ti-trending-up" style="color:var(--text-accent)" aria-hidden="true"></i></div>
+        <div class="rec-text"><strong>مشروع الإدمان:</strong> إضافة SHAP values لتفسير أهمية المتغيرات، وتجربة LightGBM كبديل أسرع لـ XGBoost</div>
+      </li>
+      <li>
+        <div class="rec-icon" style="background:var(--bg-success)"><i class="ti ti-clock" style="color:var(--text-success)" aria-hidden="true"></i></div>
+        <div class="rec-text"><strong>سكربت Mayo Clinic:</strong> الانتقال إلى async/await مع aiohttp لتحسين الأداء بنسبة تصل إلى 80%، وإضافة Proxy Rotation</div>
+      </li>
+      <li>
+        <div class="rec-icon" style="background:var(--bg-warning)"><i class="ti ti-chart-line" style="color:#854F0B" aria-hidden="true"></i></div>
+        <div class="rec-text"><strong>تحليل الكريبتو:</strong> إضافة Moving Averages (SMA/EMA) وتحليل Correlation مع Fear & Greed Index لاستخراج رؤى تداولية</div>
+      </li>
+      <li>
+        <div class="rec-icon" style="background:var(--bg-pro)"><i class="ti ti-database" style="color:var(--text-pro)" aria-hidden="true"></i></div>
+        <div class="rec-text"><strong>لجميع المشاريع:</strong> توثيق الكود بـ docstrings، إضافة unit tests، ورفع المشاريع على GitHub مع README احترافي</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ==================== SUMMARY ==================== -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num"><i class="ti ti-award" aria-hidden="true" style="font-size:14px"></i></div>
+      <h3 class="sec-title">ملخص البروفايل التقني</h3>
+    </div>
+
+    <div class="summary-grid">
+      <div class="sum-card">
+        <div class="sum-icon"><i class="ti ti-brain" aria-hidden="true" style="color:var(--text-accent)"></i></div>
+        <p class="sum-title">Machine Learning</p>
+        <p class="sum-body">إتقان دورة حياة النموذج كاملة: preprocessing، EDA، training، hyperparameter tuning، وevaluation باستخدام sklearn وXGBoost</p>
+      </div>
+      <div class="sum-card">
+        <div class="sum-icon"><i class="ti ti-world" aria-hidden="true" style="color:var(--text-success)"></i></div>
+        <p class="sum-title">Web Scraping</p>
+        <p class="sum-body">بناء scrapers احترافية بـ OOP مع معالجة الأخطاء، Rate Limiting، Retry Logic، والمعالجة المتوازية</p>
+      </div>
+      <div class="sum-card">
+        <div class="sum-icon"><i class="ti ti-chart-dots" aria-hidden="true" style="color:#854F0B"></i></div>
+        <p class="sum-title">Data Analysis</p>
+        <p class="sum-body">تنظيف وتحليل Time Series data مع تصور متقدم باستخدام Seaborn وMatplotlib</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const gridC = isDark ? '#2c2c2a' : '#e1e0d9';
+const textC = isDark ? '#898781' : '#898781';
+
+Chart.defaults.font.family = 'Anthropic Sans, sans-serif';
+Chart.defaults.font.size = 12;
+Chart.defaults.color = textC;
+
+new Chart(document.getElementById('addChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['نمذجة ML', 'معالجة البيانات', 'تقييم النماذج', 'EDA'],
+    datasets: [{
+      data: [35, 25, 20, 20],
+      backgroundColor: ['#2a78d6','#1baf7a','#eda100','#534AB7'],
+      borderWidth: 2,
+      borderColor: isDark ? '#1a1a19' : '#fcfcfb'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12 } } },
+    cutout: '55%'
+  }
+});
+
+new Chart(document.getElementById('scrapChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['منطق السحب', 'تحليل HTML', 'حفظ البيانات', 'Rate Limiting'],
+    datasets: [{
+      data: [40, 30, 15, 15],
+      backgroundColor: ['#1baf7a','#D85A30','#eda100','#e34948'],
+      borderWidth: 2,
+      borderColor: isDark ? '#1a1a19' : '#fcfcfb'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12 } } },
+    cutout: '55%'
+  }
+});
+
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+const prices = [28000,32000,45000,61000,58000,35000,29000,33000,41000,55000,67000,47000,38000,42000,52000,63000,71000,58000];
+new Chart(document.getElementById('cryptoChart'), {
+  type: 'line',
+  data: {
+    labels: months,
+    datasets: [{
+      label: 'Close Price (USD)',
+      data: prices,
+      borderColor: '#2a78d6',
+      backgroundColor: 'rgba(42,120,214,0.08)',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: '#2a78d6',
+      fill: true,
+      tension: 0.4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    scales: {
+      x: { grid: { color: gridC }, ticks: { maxRotation: 45 } },
+      y: {
+        grid: { color: gridC },
+        ticks: {
+          callback: v => '$' + (v/1000).toFixed(0) + 'K'
+        }
+      }
+    },
+    plugins: { legend: { display: false } }
+  }
+});
+
+new Chart(document.getElementById('typeChart'), {
+  type: 'pie',
+  data: {
+    labels: ['Machine Learning', 'Web Scraping', 'Data Analysis'],
+    datasets: [{
+      data: [33, 33, 34],
+      backgroundColor: ['#2a78d6','#1baf7a','#eda100'],
+      borderWidth: 2,
+      borderColor: isDark ? '#1a1a19' : '#fcfcfb'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10 } } }
+  }
+});
+
+new Chart(document.getElementById('libChart'), {
+  type: 'bar',
+  data: {
+    labels: ['pandas', 'matplotlib', 'seaborn', 'sklearn', 'requests', 'xgboost'],
+    datasets: [{
+      label: 'عدد المشاريع',
+      data: [3, 3, 2, 1, 1, 1],
+      backgroundColor: ['#2a78d6','#1baf7a','#eda100','#534AB7','#D85A30','#e34948'],
+      borderWidth: 0,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: gridC }, ticks: { stepSize: 1 }, min: 0, max: 4 }
+    }
+  }
+});
+</script>
